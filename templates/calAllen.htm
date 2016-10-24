@@ -4,10 +4,36 @@
 <!--// <meta http-equiv="refresh" content="20;url=http://localhost:5000/" /> //-->
 <meta charset="utf-8">
 <title>Calendar - Allen</title>
+<style>
+body {background-color: #404040; color: white; font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;}
+.nameTitle {
+	font-size: 3em;
+	text-align:center;
+	}
+.attendanceTable {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    }
+.attendance {
+	font-size: 1.3em;
+	}
+.attendanceBox {
+    width: 20px;
+    height: 20px;
+    background-color: {{ attendanceColor }};
+    }
+</style>
 </head>
 
 <body>
-<div class="nameStatus">Allen Stetson:  In the Office Today</div>
+<div class="nameTitle">Allen Stetson</div>
+<table border="0" class="attendanceTable">
+    <tr>
+        <td align="center" valign="middle"><div class="attendance">{{ attendance }} Today</div></td>
+        <td><div class="attendanceBox"></div></td>
+    </tr>
+    </table>
 <iframe src="https://outlook.office365.com/owa/calendar/83448c71545d436092a4cc37cdfe2b93@wetafx.co.nz/bf0e8f1f199c4aaa99b7f934ed548a057145660769545467377/S-1-8-2741942487-3646031804-687166712-3151867639/reachcalendar.html" style="border:2px solid grey;" width="100%" height="700px"></iframe>
 </body>
 </html>

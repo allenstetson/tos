@@ -22,7 +22,8 @@ class WeatherInfo(dict):
         weatherApiKey = "7ef3ef345316959c479dda977fa1f87c"
         weatherApiURL = "http://api.openweathermap.org/data/2.5/weather?q="
         self['weatherURL'] = "%s%s&appid=%s" % (weatherApiURL, place, weatherApiKey)
-        self['weatherDataFile'] = "/mnt/c/Users/allen/tmp/weatherData_%s.json" % place
+        self['weatherDataDir'] = "/mnt/c/Users/allen/tmp"
+        self['weatherDataFile'] = "%s/weatherData_%s.json" % (self['weatherDataDir'], place)
 
     def getInfoFromAPI(self):
         data = self._getRecentCache()
@@ -30,6 +31,8 @@ class WeatherInfo(dict):
             print("Opening URL: %s" % self['weatherURL'])
             response = urllib2.urlopen(self['weatherURL'])
             data = json.load(response)
+            if not os.path.exists(self['weatherDataDir']):
+                os.makedirs(self['weatherDataDir'])
             fh = open(self['weatherDataFile'], 'w')
             json.dump(data, fh)
             fh.close()
@@ -74,7 +77,16 @@ def clockUpdate():
 
 @app.route('/calAllen')
 def calAllen():
-    return render_template('calAllen.htm')
+    attendance = "In the Office"
+    if attendance == "In the Office":
+        attendanceColor = "#00AA00"
+    elif attendance == "Out of the Office":
+        attendanceColor = "#990000"
+    elif attendance == "Temporarily Unavailable":
+        attendanceColor = "#0033CC"
+    else:
+        attendanceColor = "#999999"
+    return render_template('calAllen.htm', attendance=attendance, attendanceColor=attendanceColor)
 
 
 if __name__ == '__main__':
