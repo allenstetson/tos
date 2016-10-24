@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="refresh" content="20;url=http://localhost:5000/calAllen" />
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<style>
+body {background-color: #404040; color: white;}
+hr {margin-bottom: 1em;}
+.locationTitle {
+	font-size: 3em;
+	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align:center;
+	}
+.timestamp {
+	font-size: 2em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align: center;
+	}
+.datestamp {
+	margin-top: 0.7em;
+	font-size: 1.3em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align: center;
+	}
+.line-separator{
+	height: 1px;
+	width: 200px;
+	background: #717171;
+	border-bottom: 1px solid #313030;
+	margin: auto;
+	margin-bottom: 1em;
+	margin-top: 1em;
+	}
+.weatherBox{
+	display:table; 
+	height:150; 
+	margin:auto;
+	}
+.tempC{
+	font-size: 1.5em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	display:table-cell;
+	}
+.tempF{
+	color: #aaaaaa;
+	font-size: .75em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	display:table-cell;
+	}
+.weatherCondition{
+	font-size: 1.5em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	display:table-cell;
+	}
+.weatherIcon{
+	vertical-align: middle;
+	display:table-cell;
+	margin-bottom: 0.1em;
+	}
+.windInfo{
+	font-size: 1.15em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align: center;
+	margin-bottom: 1em;
+	margin-top: -1em;
+	}
+.loadedTime{
+	color: #555555;
+	font-size: 0.7em;
+	text-align:right;
+    }
+</style>
+
+<title>TOSClock</title>
+</head>
+
+<body>
+<!-- WELLINGTON //-->
+<div class="locationTitle"><img src="static/img/flagNz.png" width="106" height="53"><br>Wellington, NZ</div>
+<div style="text-align:center"><span class="timestamp" id="nzTime">Loading...</span>
+&nbsp; - &nbsp;
+<span class="datestamp" id="nzDate">Loading...</span></div>
+<div class="line-separator"></div>
+<div class="weatherBox">
+	<span class="tempC">{{ nzWeatherInfo['temp_c'] }} &deg;c</span> &nbsp; <span class="tempF">({{ nzWeatherInfo['temp_f'] }} &deg;f)</span>
+	<span class="weatherIcon">
+	<img src='{{ nzWeatherInfo['iconURL'] }}' height="150" width="150">
+	</span><span class="weatherCondition">{{ nzWeatherInfo['description'] }}</span>
+    </div>
+<div class="windInfo">Wind: {{ nzWeatherInfo['windspeed_k'] }} knots</div>
+<hr>
+<!-- MBEACH //-->
+<div class="locationTitle"><img src="static/img/flagUs.png" width="100" height="52"><br>Manhattan Beach, USA</div>
+<div style="text-align:center"><span class="timestamp" id="laTime">Loading...</span>
+&nbsp; - &nbsp;
+<span class="datestamp" id="laDate">Loading...</span></div>
+<div class="line-separator"></div>
+<div class="weatherBox">
+	<span class="tempC">{{ laWeatherInfo['temp_c'] }} &deg;c</span> &nbsp; <span class="tempF">({{ laWeatherInfo['temp_f'] }} &deg;f)</span>
+	<span class="weatherIcon">
+	<img src='{{ laWeatherInfo['iconURL'] }}' height="150" width="150">
+	</span><span class="weatherCondition">{{ laWeatherInfo['description'] }}</span>
+    </div>
+<div class="windInfo">Wind: {{ laWeatherInfo['windspeed_k'] }} knots</div>
+
+<div class="loadedTime">{{ date }}</div>
+
+<script>
+var myVar = setInterval(DoThings, 2000);
+
+function DoThings()
+{
+$.ajax("http://localhost:5000/clockUpdate", {
+      success: function(data) {
+		   var json = $.parseJSON(data);
+           document.getElementById("nzTime").innerHTML = json.nzTime;
+           document.getElementById("laTime").innerHTML = json.laTime;
+           document.getElementById("nzDate").innerHTML = json.nzDate;
+           document.getElementById("laDate").innerHTML = json.laDate;
+      },
+      error: function() {
+           document.getElementById("nzTime").innerHTML = "timestamp";
+		   document.getElementById("laTime").innerHTML = "is broken";
+      }
+   });
+}
+
+</script>
+
+</body>
+</html>

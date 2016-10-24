@@ -1,9 +1,59 @@
 import os
 import json
 import poplib
+from observer import Observable
 
+'''
+from Observer import Observer, Observable
+
+class Flower:
+    def __init__(self):
+        self.isOpen = 0
+        self.openNotifier = Flower.OpenNotifier(self)
+        self.closeNotifier= Flower.CloseNotifier(self)
+    def open(self): # Opens its petals
+        self.isOpen = 1
+        self.openNotifier.notifyObservers()
+        self.closeNotifier.open()
+    def close(self): # Closes its petals
+        self.isOpen = 0
+        self.closeNotifier.notifyObservers()
+        self.openNotifier.close()
+    def closing(self): return self.closeNotifier
+
+    class OpenNotifier(Observable):
+        def __init__(self, outer):
+            Observable.__init__(self)
+            self.outer = outer
+            self.alreadyOpen = 0
+        def notifyObservers(self):
+            if self.outer.isOpen and \
+            not self.alreadyOpen:
+                self.setChanged()
+                Observable.notifyObservers(self)
+                self.alreadyOpen = 1
+        def close(self):
+            self.alreadyOpen = 0
+'''
 
 class IncomingEmailNotification(object):
+    def __init__(self):
+        self.hasNewAlert = False
+        self.notifierNewAlert = IncomingEmailNotification.NotifierNewAlert(self)
+
+    class NotifierNewAlert(Observable):
+        def __init__(self, outer):
+            Observable.__init__(self)
+            self.outer = outer
+            self.alertAlreadySent = False
+        def notifyObservers(self):
+            if self.outer.hasNewAlert and self.alertAlreadySent:
+                self.setChanged()
+                Observable.notifyObservers(self)
+                self.alertAlreadySent = True
+        def close(self):
+            self.alertAlreadySent = False
+
     def _checkForNewMail(self, mailbox):
         lastReadInboxLocation = '%s/.tosEmailInbox.json' % os.environ['HOME']
         # Load last-read inbox
@@ -43,6 +93,10 @@ class IncomingEmailNotification(object):
                 isImportant = self._checkNewMsgForImportance(msg)
                 if isImportant:
                     notificationsRaw.append(msg)
+        if notificationsRaw:
+            self.hasNewAlert = True
+            self.notifierNewAlert.notifyObservers()
+
         return list(map(lambda x: TOSNotification(x), notificationsRaw))
 
 

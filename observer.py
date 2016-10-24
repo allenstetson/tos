@@ -1,4 +1,5 @@
 from synchronization import *
+#From: http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Observer.html
 
 class Observer:
     def update(observable, arg):
