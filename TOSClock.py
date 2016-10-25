@@ -8,13 +8,15 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+TIMEOUT = 30
+
 @app.route('/')
 def main():
     date = datetime.datetime.now()
     #Get weather:
     nzWeatherInfo = WeatherInfo('Wellington,nz').getInfoFromAPI()
     laWeatherInfo = WeatherInfo('Manhattan_Beach,us').getInfoFromAPI()
-    return render_template('TOSClock.htm', date=date, nzWeatherInfo=nzWeatherInfo, laWeatherInfo=laWeatherInfo)
+    return render_template('TOSClock.htm', date=date, nzWeatherInfo=nzWeatherInfo, laWeatherInfo=laWeatherInfo, timeout=TIMEOUT)
 
 class WeatherInfo(dict):
     def __init__(self, place):
@@ -22,7 +24,7 @@ class WeatherInfo(dict):
         weatherApiKey = "7ef3ef345316959c479dda977fa1f87c"
         weatherApiURL = "http://api.openweathermap.org/data/2.5/weather?q="
         self['weatherURL'] = "%s%s&appid=%s" % (weatherApiURL, place, weatherApiKey)
-        self['weatherDataDir'] = "/mnt/c/Users/allen/tmp"
+        self['weatherDataDir'] = "/tmp"
         self['weatherDataFile'] = "%s/weatherData_%s.json" % (self['weatherDataDir'], place)
 
     def getInfoFromAPI(self):
@@ -86,11 +88,11 @@ def calAllen():
         attendanceColor = "#0033CC"
     else:
         attendanceColor = "#999999"
-    return render_template('calAllen.htm', attendance=attendance, attendanceColor=attendanceColor)
+    return render_template('calAllen.htm', attendance=attendance, attendanceColor=attendanceColor, timeout=TIMEOUT)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
 
 
 
