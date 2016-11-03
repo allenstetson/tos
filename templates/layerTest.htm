@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>A layering test</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+<style>
+.layerOne{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index:10;
+  }
+.layerTwo{
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  z-index:20;
+  }
+</style>
+
+</head>
+<body>
+
+<div class="layerOne">I'm on layer one. <img src="http://images5.fanpop.com/image/polls/1053000/1053597_1339818700179_full.jpg" width="894"></div>
+
+<div class="layerTwo">I'm on layer two. <img src="http://th02.deviantart.net/fs71/PRE/f/2010/212/8/4/Raichu_Vexal_by_iiRoleplayy.png"></div>
+
+
+<script>
+$(document).ready(function(){
+setInterval(function loopThroughPages(){ 
+  $(".layerOne").css('z-index', 10);
+  $(".layerTwo").css('z-index', 20);
+  setTimeout(function(){
+    $(".layerOne").css('z-index', 20);
+    $(".layerTwo").css('z-index', 10);
+  },3000);
+}, 6000);
+});
+</script>
+
+</body>
+</html>
