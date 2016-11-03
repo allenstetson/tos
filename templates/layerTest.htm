@@ -18,6 +18,7 @@
   position:absolute;
   left: 0px;
   top: 0px;
+  width:100%;
   z-index:20;
   }
 .windowTop{
@@ -95,7 +96,7 @@ I'm on layer one. <img src="http://images5.fanpop.com/image/polls/1053000/105359
 </p>
 
 <p class="layerTwo">
-I'm on layer two. <img src="http://th02.deviantart.net/fs71/PRE/f/2010/212/8/4/Raichu_Vexal_by_iiRoleplayy.png">
+<iframe src="https://outlook.office365.com/owa/calendar/83448c71545d436092a4cc37cdfe2b93@wetafx.co.nz/bf0e8f1f199c4aaa99b7f934ed548a057145660769545467377/S-1-8-2741942487-3646031804-687166712-3151867639/reachcalendar.html" style="border:0px solid grey;" width="100%" height="100%"></iframe>
 </p>
 </div>
 
@@ -107,8 +108,8 @@ setInterval(function loopThroughPages(){
   setTimeout(function(){
     $(".layerOne").css('z-index', 20);
     $(".layerTwo").css('z-index', 10);
-  },3000);
-}, 6000);
+  },10000);
+}, 20000);
 });
 </script>
 
