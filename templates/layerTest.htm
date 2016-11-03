@@ -6,6 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
 .layerOne{
   position: absolute;
@@ -21,29 +22,70 @@
   }
 .windowTop{
   background-color:#AD4B4D;
-  padding-top:20px;
-  padding-bottom:20px;
+  padding-top:0px;
+  padding-bottom:0px;
   width:auto;
-  height:20%;
+  height:10%;
   }
 .windowLeft{
   background-color:#567E8F;
   width:20%;
   float:left;
-  height:74%;
+  height:88%;
   }
 .windowMain{
   background-color:#CCBF6B;
   width:80%;
   margin-left:20%;
-  height:74%;
+  height:88%;
   position:relative;
   }
+
+
+.dateToday{
+  margin-left:0px;
+  margin-right:10px;
+  font-size:1.5em;
+  }
+.flag{
+	vertical-align:middle;
+  }
+.locationTitle {
+	font-size: 1.5em;
+	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align:center;
+	margin-left:10px;
+	margin-right:10px;
+	}
+.timestamp {
+	font-size: 1.5em;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+	text-align: center;
+	}
+
 </style>
 
 </head>
 <body>
-<div class="windowTop">{{ content['top'] }}</div>
+<div class="windowTop">
+<table width="100%"><tr><td width="15%">
+  <span class="dateToday">Loading...</span>
+</td>
+
+<td width="40%">
+  <img class="flag" src="static/img/flagNz.png" width="106" height="53">
+  <span class="locationTitle">Wellington, NZ</span>
+  <span class="timestamp" id="nzTime">Loading...</span>
+</td>
+
+<td width="40%">
+  <img class="flag" src="static/img/flagUs.png" width="100" height="52">
+  <span class="locationTitle">Manhattan Beach, USA</span>
+  <span class="timestamp" id="laTime">Loading...</span>
+</td>
+</tr>
+</table>
+</div>
 
 <div class="windowLeft">{{ content['left'] }}</div>
 
