@@ -19,15 +19,43 @@
   top: 0px;
   z-index:20;
   }
+.windowTop{
+  background-color:#AD4B4D;
+  padding-top:20px;
+  padding-bottom:20px;
+  width:auto;
+  height:20%;
+  }
+.windowLeft{
+  background-color:#567E8F;
+  width:20%;
+  float:left;
+  height:74%;
+  }
+.windowMain{
+  background-color:#CCBF6B;
+  width:80%;
+  margin-left:20%;
+  height:74%;
+  position:relative;
+  }
 </style>
 
 </head>
 <body>
+<div class="windowTop">{{ content['top'] }}</div>
 
-<div class="layerOne">I'm on layer one. <img src="http://images5.fanpop.com/image/polls/1053000/1053597_1339818700179_full.jpg" width="894"></div>
+<div class="windowLeft">{{ content['left'] }}</div>
 
-<div class="layerTwo">I'm on layer two. <img src="http://th02.deviantart.net/fs71/PRE/f/2010/212/8/4/Raichu_Vexal_by_iiRoleplayy.png"></div>
+<div class="windowMain">{{ content['main'] }}
+<p class="layerOne">
+I'm on layer one. <img src="http://images5.fanpop.com/image/polls/1053000/1053597_1339818700179_full.jpg" width="894">
+</p>
 
+<p class="layerTwo">
+I'm on layer two. <img src="http://th02.deviantart.net/fs71/PRE/f/2010/212/8/4/Raichu_Vexal_by_iiRoleplayy.png">
+</p>
+</div>
 
 <script>
 $(document).ready(function(){
