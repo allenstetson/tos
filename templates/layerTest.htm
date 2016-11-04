@@ -8,6 +8,9 @@
 <script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
+body{
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+  }
 .layerOne{
   position: absolute;
   left: 0px;
@@ -28,14 +31,15 @@
   width:auto;
   height:10%;
   }
-.windowLeft{
-  background-color:#567E8F;
+.windowSummary{
+  background-color:#FFF;
   width:20%;
   float:left;
   height:88%;
+  padding-left:4px;
   }
 .windowMain{
-  background-color:#CCBF6B;
+  background-color:#FFF;
   width:80%;
   margin-left:20%;
   height:88%;
@@ -53,15 +57,59 @@
   }
 .locationTitle {
 	font-size: 1.5em;
-	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	text-align:center;
 	margin-left:10px;
 	margin-right:10px;
 	}
 .timestamp {
 	font-size: 1.5em;
-	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	text-align: center;
+	}
+
+
+.summaryTitle {
+	font-size: 1.5em;
+	text-align: center;
+	margin-bottom:4px;
+	}
+.summarySection {
+	font-size: 1em;
+	text-align: left;
+	}
+.summarySubsection {
+	font-size: .8em;
+	text-align: left;
+	margin-left:5px;
+	color:#999999;
+	}
+.summaryBody {
+	font-size: .9em;
+	text-align: left;
+	margin-left:15px;
+	}
+
+.summaryNextTitle {
+	font-size: 1.5em;
+	text-align: center;
+	margin-bottom:4px;
+	color:#999;
+	}
+.summaryNextSection {
+	font-size: 1em;
+	text-align: left;
+	color:#999;
+	}
+.summaryNextSubsection {
+	font-size: .8em;
+	text-align: left;
+	margin-left:5px;
+	color:#BBB;
+	}
+.summaryNextBody {
+	font-size: .9em;
+	text-align: left;
+	margin-left:15px;
+	color:#999;
 	}
 
 </style>
@@ -88,7 +136,22 @@
 </table>
 </div>
 
-<div class="windowLeft">{{ content['left'] }}</div>
+<div class="windowSummary">{{ content['left'] }}
+<p class="summaryTitle">9am - 10:00am</p>
+<div class="summarySection">Morning Standup</div>
+<div class="summarySubsection">Weta Office</div>
+<div class="summaryBody">Tim, Ronald, Wil, Allen, Bex, Ken, Justin R., Justin S., Damon, Corey</div>
+
+<p class="summaryNextTitle">10am - 10:30am</p>
+<div class="summaryNextSection">Usability Testing - LAB</div>
+<div class="summaryNextSubsection"></div>
+<div class="summaryNextBody">Damon, Corey</div>
+
+<p class="summaryNextTitle">10am - 11:00am</p>
+<div class="summaryNextSection">T4 Roundup</div>
+<div class="summaryNextSubsection">Downstairs Meeting Room</div>
+<div class="summaryNextBody">Tim, Allen, Justin R., Justin S., VPSP</div>
+</div>
 
 <div class="windowMain">{{ content['main'] }}
 <p class="layerOne">
