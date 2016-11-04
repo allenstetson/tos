@@ -1,19 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<head><title>Allen flask_socketio Test</title></head>
-<body>
-    <h1>Flask Socketio</h1>
-    <h2><span id="connected">{{ name }} {{ last }}</span> 
-        user is on this page right now.</h2>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>A layering test</title>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-    socket.on('connect', function() {
-        socket.emit('my event', {data: 'I\'m connected!'});
-		$("#connected").html(connect['name']);
-		$("#connected").html(connect['last']);
-    });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+body{
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+  }
+  
+.windowTop{
+  background-color:#FFF;
+  padding-top:0px;
+  padding-bottom:0px;
+  width:auto;
+  height:10%;
+  }
+.windowSummary{
+  background-color:#FFF;
+  width:20%;
+  float:left;
+  height:88%;
+  padding-left:4px;
+  }
+.windowMain{
+  background-color:#FFF;
+  width:80%;
+  margin-left:20%;
+  height:88%;
+  position:relative;
+  }
+
+.windowPane{
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  width:100%;
+  }
+
+.dateToday{
+  margin-left:0px;
+  margin-right:10px;
+  font-size:1.5em;
+  }
+.flag{
+	vertical-align:middle;
+  }
+.locationTitle {
+	font-size: 1.5em;
+	text-align:center;
+	margin-left:10px;
+	margin-right:10px;
+	}
+.timestamp {
+	font-size: 1.5em;
+	text-align: center;
+	}
+
+
+.summaryTitle {
+	font-size: 1.5em;
+	text-align: center;
+	margin-bottom:4px;
+	}
+.summarySection {
+	font-size: 1em;
+	text-align: left;
+	}
+.summarySubsection {
+	font-size: .8em;
+	text-align: left;
+	margin-left:5px;
+	color:#999999;
+	}
+.summaryBody {
+	font-size: .9em;
+	text-align: left;
+	margin-left:15px;
+	}
+
+.summaryNextTitle {
+	font-size: 1.5em;
+	text-align: center;
+	margin-bottom:4px;
+	color:#999;
+	}
+.summaryNextSection {
+	font-size: 1em;
+	text-align: left;
+	color:#999;
+	}
+.summaryNextSubsection {
+	font-size: .8em;
+	text-align: left;
+	margin-left:5px;
+	color:#BBB;
+	}
+.summaryNextBody {
+	font-size: .9em;
+	text-align: left;
+	margin-left:15px;
+	color:#999;
+	}
+
+</style>
+
+</head>
+<body>
+<div class="windowTop">
+<table width="100%"><tr><td width="20%">
+  <span class="dateToday" id="laDate">Loading...</span>
+</td>
+
+<td width="40%">
+  <img class="flag" src="static/img/flagNz.png" width="106" height="53">
+  <span class="locationTitle">Wellington, NZ</span>
+  <span class="timestamp" id="nzTime">Loading...</span>
+</td>
+
+<td width="40%">
+  <img class="flag" src="static/img/flagUs.png" width="100" height="52">
+  <span class="locationTitle">Manhattan Beach, USA</span>
+  <span class="timestamp" id="laTime">Loading...</span>
+</td>
+</tr>
+</table>
+</div>
+
+<div id="windowSummary" class="windowSummary">
+{{ summaryContent }}
+</div>
+
+<div id="windowMain" class="windowMain">
+{{ panes }}
+</div>
+
+<script>
+// Clock and Weather:
+function updateClockWeather()
+{
+$.ajax("http://localhost:5000/clockUpdate", {
+      success: function(data) {
+		   var json = $.parseJSON(data);
+           document.getElementById("nzTime").innerHTML = json.nzTime;
+           document.getElementById("laTime").innerHTML = json.laTime;
+           document.getElementById("laDate").innerHTML = json.laDate;
+      },
+      error: function() {
+           document.getElementById("nzTime").innerHTML = "timestamp";
+		   document.getElementById("laTime").innerHTML = "is broken";
+      }
+   });
+}
+$(function() {
+	setInterval(updateClockWeather, 2000);
+});
+
+// Summary Info:
+function updateSummaryWindow()
+{
+  $.ajax({
+    url: "http://localhost:5000/summaryUpdate",
+    context: document.body,
+    success: function(response){
+      $('#windowSummary').html(response);
+    }
+  });
+}
+$(function() {
+	setInterval(updateSummaryWindow, 300000); //update every 5 minutes
+	//setInterval(updateSummaryWindow, 2000); //update every 2 sec
+});
+
+// Window Panes (in Main Window)
+function cyclePanes(){
+    var windowPanes = $('#windowMain p'),
+        now    = windowPanes.filter(':visible'),
+        next   = now.next().length ? now.next() : windowPanes.first(),
+        speed  = 1000;
+
+    now.fadeOut(speed);
+    next.fadeIn(speed);
+}
+$(function() {
+    setInterval(cyclePanes, 20000);
+});
 </script>
+
 </body>
 </html>

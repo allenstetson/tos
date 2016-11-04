@@ -1,0 +1,2 @@
+http://lyallbaycam.dyndns.tv/axis-cgi/mjpg/video.cgi?resolution=1280x720&amp;dummy=1478236142394
+

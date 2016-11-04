@@ -1,54 +1,24 @@
-from synchronization import *
-#From: http://python-3-patterns-idioms-test.readthedocs.io/en/latest/Observer.html
+print("Content-type: application/json")
+import json
+from observer import Observer
 
-class Observer:
-    def update(observable, arg):
-        '''Called when the observed object is
-        modified. You call an Observable object's
-        notifyObservers method to notify all the
-        object's observers of the change.'''
-        raise NotImplementedError
+'''
+response = [{'name':'scooby', 'last':'doo', 'where':'rU'}]
+print(json.JSONEncoder().encode(response))
+'''
 
-class Observable(Synchronization):
+print("\n")
+
+
+class AlertSniffer:
     def __init__(self):
-        self.obs = []
-        self.changed = 0
-        Synchronization.__init__(self)
+        self.openObserver = AlertSniffer.OpenObserver(self)
+        self.response={'Price':54,'Cost':'99'}
+    class OpenObserver(Observer):
+        def __init__(self, outer):
+            self.outer = outer
+        def update(self, observable, arg):
+            self.response={'Price':'ALERT ALERT'}
 
-    def addObserver(self, observer):
-        if observer not in self.obs:
-            self.obs.append(observer)
-
-    def deleteObserver(self, observer):
-        self.obs.remove(observer)
-
-    def notifyObservers(self, arg = None):
-        '''If 'changed' indicates that this object
-        has changed, notify all its observers, then
-        call clearChanged(). Each observer has its
-        update() called with two arguments: this
-        observable object and the generic 'arg'.'''
-
-        self.mutex.acquire()
-        try:
-            if not self.changed: return
-            # Make a local copy in case of synchronous
-            # additions of observers:
-            localArray = self.obs[:]
-            self.clearChanged()
-        finally:
-            self.mutex.release()
-        # Updating is not required to be synchronized:
-        for observer in localArray:
-            observer.update(self, arg)
-
-    def deleteObservers(self): self.obs = []
-    def setChanged(self): self.changed = 1
-    def clearChanged(self): self.changed = 0
-    def hasChanged(self): return self.changed
-    def countObservers(self): return len(self.obs)
-
-synchronize(Observable,
-  "addObserver deleteObserver deleteObservers " +
-  "setChanged clearChanged hasChanged " +
-  "countObservers")
+response = AlertSniffer().response
+print(json.JSONEncoder().encode(response))
