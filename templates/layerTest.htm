@@ -11,21 +11,9 @@
 body{
   font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
   }
-.layerOne{
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  z-index:10;
-  }
-.layerTwo{
-  position:absolute;
-  left: 0px;
-  top: 0px;
-  width:100%;
-  z-index:20;
-  }
+  
 .windowTop{
-  background-color:#AD4B4D;
+  background-color:#FFF;
   padding-top:0px;
   padding-bottom:0px;
   width:auto;
@@ -46,6 +34,12 @@ body{
   position:relative;
   }
 
+.windowPane{
+  position:absolute;
+  left: 0px;
+  top: 0px;
+  width:100%;
+  }
 
 .dateToday{
   margin-left:0px;
@@ -153,26 +147,60 @@ body{
 <div class="summaryNextBody">Tim, Allen, Justin R., Justin S., VPSP</div>
 </div>
 
-<div class="windowMain">{{ content['main'] }}
-<p class="layerOne">
-I'm on layer one. <img src="http://images5.fanpop.com/image/polls/1053000/1053597_1339818700179_full.jpg" width="894">
+<div id="windowMain" class="windowMain">{{ content['main'] }}
+<p class="windowPane">
+<img src="http://images5.fanpop.com/image/polls/1053000/1053597_1339818700179_full.jpg" height="100%">
 </p>
 
-<p class="layerTwo">
-<iframe src="https://outlook.office365.com/owa/calendar/83448c71545d436092a4cc37cdfe2b93@wetafx.co.nz/bf0e8f1f199c4aaa99b7f934ed548a057145660769545467377/S-1-8-2741942487-3646031804-687166712-3151867639/reachcalendar.html" style="border:0px solid grey;" width="100%" height="100%"></iframe>
+<p class="windowPane">
+<iframe src="https://outlook.office365.com/owa/calendar/83448c71545d436092a4cc37cdfe2b93@wetafx.co.nz/bf0e8f1f199c4aaa99b7f934ed548a057145660769545467377/S-1-8-2741942487-3646031804-687166712-3151867639/reachcalendar.html" style="border:0px;" width="100%" height="100%"></iframe>
 </p>
+
+<p class="windowPane">
+<iframe src="http://lyallbaycam.dyndns.tv/axis-cgi/mjpg/video.cgi?resolution=1280x720&amp;dummy=1478236142394" width="100%" height="100%"style="border:0px;"></iframe>
+</p>
+
 </div>
 
 <script>
 $(document).ready(function(){
-setInterval(function loopThroughPages(){ 
-  $(".layerOne").css('z-index', 10);
-  $(".layerTwo").css('z-index', 20);
-  setTimeout(function(){
-    $(".layerOne").css('z-index', 20);
-    $(".layerTwo").css('z-index', 10);
-  },10000);
-}, 20000);
+//  displayJunk();
+});
+
+function displayJunk(){
+  a = setInterval(function(){
+    $(".layer1").css('z-index', 30);
+    $(".layer2").css('z-index', 10);
+    $(".layer3").css('z-index', 20);
+  },2000);
+//  clearInterval(a);
+  b = setInterval(function(){
+    $(".layer1").css('z-index', 20);
+    $(".layer2").css('z-index', 30);
+    $(".layer3").css('z-index', 10);
+  },2000);
+//  clearInterval(b);
+  c = setInterval(function(){
+    $(".layer1").css('z-index', 10);
+    $(".layer2").css('z-index', 20);
+    $(".layer3").css('z-index', 30);
+  },2000);
+//  clearInterval(c);
+  displayJunk();
+}
+
+function cycleImages(){
+    var windowPanes = $('#windowMain p'),
+        now    = windowPanes.filter(':visible'),
+        next   = now.next().length ? now.next() : windowPanes.first(),
+        speed  = 1000;
+
+    now.fadeOut(speed);
+    next.fadeIn(speed);
+}
+
+$(function() {
+    setInterval(cycleImages, 7000);
 });
 </script>
 
