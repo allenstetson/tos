@@ -1,11 +1,14 @@
 import os
-import pdb
+import sys
 import json
 import pytz
 import time
 import urllib2
 import datetime
 from flask import Flask, render_template, Markup
+sys.path.insert(0, '.')
+import wetaVisitData
+import pdb
 
 app = Flask(__name__)
 
@@ -49,7 +52,7 @@ def getHourlySummary():
     activeEvents = []
     imminentEvents = []
     nextEvents = []
-    data = _getDummyData()
+    data = wetaVisitData.getVisitData()
     today = datetime.date.today().strftime("%m/%d/%Y")
     now = datetime.datetime.now()
     if not data.has_key(today):
@@ -69,8 +72,8 @@ def getHourlySummary():
             #Coming up within thirty mins!
             print("Found imminent event: %s" % event['title'])
             imminentEvents.append(event)
-        elif delta.seconds/60/60 < 60:
-            # Coming up within the hour
+        elif delta.seconds/60/60 < 2:
+            # Coming up within the next 2 hours
             print("Found upcoming event: %s" % event['title'])
             nextEvents.append(event)
         else:
@@ -96,34 +99,6 @@ def formatSummary(activeEvents, imminentEvents, nextEvents):
         output.append('<div class="summaryNextSubsection">%s</div>' % event['location'])
         output.append('<div class="summaryNextBody">%s</div>' % ", ".join(event['attendees']))
     return output
-
-def _getDummyData():
-    #---------------------
-    # Data would be gotten via json read, but for now:
-    data = {}
-    data["11/04/2016"] = [None, None, None]
-    data["11/04/2016"][0] = {}
-    data["11/04/2016"][0]['startTime'] = "9:00"
-    data["11/04/2016"][0]['endTime'] = "10:00"
-    data["11/04/2016"][0]['title'] = "Morning Standup - Weta"
-    data["11/04/2016"][0]['location'] = "The Locked Room"
-    data["11/04/2016"][0]['attendees'] = sorted(["Tim", "Ronald", "Wil", "Allen", "Bex", "Ken",
-                                          "Justin R.", "Justin S.", "Damon", "Corey"])
-
-    data["11/04/2016"][1] = {}
-    data["11/04/2016"][1]['startTime'] = "10:00"
-    data["11/04/2016"][1]['endTime'] = "10:30"
-    data["11/04/2016"][1]['title'] = "Usability Testing - LAB"
-    data["11/04/2016"][1]['location'] = ""
-    data["11/04/2016"][1]['attendees'] = sorted(["Damon", "Corey"])
-
-    data["11/04/2016"][2] = {}
-    data["11/04/2016"][2]['startTime'] = "10:00"
-    data["11/04/2016"][2]['endTime'] = "12:00"
-    data["11/04/2016"][2]['title'] = "T4 Retrospective"
-    data["11/04/2016"][2]['location'] = "Downstairs Meeting Room"
-    data["11/04/2016"][2]['attendees'] = sorted(["Tim", "Allen", "Bex", "Justin R.", "Justin S."])
-    return data
 
 #---------------------------
 # tosClock
@@ -188,8 +163,8 @@ def clockUpdate():
     valueLa = datetime.datetime.now(pytz.timezone('US/Pacific'))
     printNzTime = "%02d:%02d:%02d" % (valueNz.hour, valueNz.minute, valueNz.second)
     printLaTime = "%02d:%02d:%02d" % (valueLa.hour, valueLa.minute, valueLa.second)
-    printNzDate = "%02d/%02d/%d" % (valueNz.month, valueNz.day, valueNz.year)
-    printLaDate = "%02d/%02d/%d" % (valueLa.month, valueLa.day, valueLa.year)
+    printNzDate = "%s %02d/%02d/%d" % (valueNz.strftime("%a"), valueNz.month, valueNz.day, valueNz.year)
+    printLaDate = "%s %02d/%02d/%d" % (valueLa.strftime("%a"), valueLa.month, valueLa.day, valueLa.year)
     return json.dumps(
         {'nzTime':printNzTime,
          'laTime':printLaTime,
