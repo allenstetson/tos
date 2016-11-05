@@ -543,5 +543,5 @@ def _getFriData(data, date = "11/11/2016"):
     return data
 
 def _getDummyData(data, date = "11/04/2016"):
-    data = _getFriData(data, date=date)
+    data = _getThuData(data, date=date)
     return data

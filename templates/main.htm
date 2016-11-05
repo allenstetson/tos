@@ -6,7 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <style>
 body{
   font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
@@ -106,6 +106,28 @@ body{
 	color:#999;
 	}
 
+/*------------------------------
+EXPERIMENTAL - FOR ALERT WINDOW
+------------------------------*/
+.modal, .active {   
+  display:none;
+  position: fixed;
+  top: 50%;
+  left: 35%;
+  width: 800px;
+  height: auto;
+  margin-left: -200px;
+  margin-top: -150px;
+  background-color:#FFF;
+  padding: 25px;
+  border-radius: 5px;
+  z-index: 999;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  }
+.active {
+    display: block;
+  }
+
 </style>
 
 </head>
@@ -137,6 +159,14 @@ body{
 <div id="windowMain" class="windowMain">
 {{ panes }}
 </div>
+
+<!-- ALERT BOX (Pops up when alert is received) //-->
+<div class="modal" id="modal">
+<header><h2>Alert Received!</h2></header>
+<section id="alertBody">Lorem ipsum dolor sit amet, consectetur amis at adipisicing elit. Maiores quaerat est officia aut nam amet ipsum natus corporis adipisci cupiditate voluptas unde totam quae vel error neque odio id etas lasf reiciendis.
+</section>
+</div>
+<!-- ((End Alert)) //-->
 
 <script>
 // Clock and Weather:
@@ -188,6 +218,59 @@ function cyclePanes(){
 $(function() {
     setInterval(cyclePanes, 20000);
 });
+
+// Alert Box
+    // Check periodically for an alert
+	function notificationCheck()
+    {
+       $.ajax({
+         url: "http://localhost:5000/notificationCheck",
+         context: document.body,
+         success: function(response){
+		   if( response[0] == true ){
+             $('#alertBody').html(response[1]);
+			 activate();
+		   }
+         }
+       });
+    }
+//$(function() {
+//	setInterval(notificationCheck, 15000);
+//});
+
+
+//$(function() {
+//	setTimeout(activate, 1000);
+//});
+	// Deactivate on ESC
+	function onDocumentKeyUp( event ) {
+		if( event.keyCode === 27 ) {
+			deactivate();
+		}
+	}
+
+	// Deactivate on click
+	function onDocumentClick( event ) {
+       deactivate() 
+	}
+
+	function activate() {
+		document.addEventListener( 'keyup', onDocumentKeyUp, false );
+		document.addEventListener( 'click', onDocumentClick, false );
+        //document.getElementById("modal").toggle('active');
+		$('.modal').toggleClass('active');
+		
+		setTimeout( function() {
+			$('.modal').toggleClass('active');
+		}, 30000 ); // keep alert active for 30 seconds
+	}
+
+	function deactivate() {
+		document.removeEventListener( 'keyup', onDocumentKeyUp, false );
+		document.removeEventListener( 'click', onDocumentClick, false );
+		$('.modal').toggleClass('active');
+	}
+
 </script>
 
 </body>

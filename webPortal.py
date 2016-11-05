@@ -8,6 +8,8 @@ import datetime
 from flask import Flask, render_template, Markup
 sys.path.insert(0, '.')
 import wetaVisitData
+import notification
+
 import pdb
 
 app = Flask(__name__)
@@ -179,6 +181,19 @@ def clockUpdate():
 @app.route('/summaryUpdate')
 def summaryUpdate():
     return Markup("\n".join(getHourlySummary()))
+
+#---------------------------
+# notificationCheck
+# Function that checks for any alerts
+#---------------------------
+@app.route('/notificationCheck')
+def notificationCheck():
+    emailNotificationChecker = notification.IncomingEmailNotification()
+    alerts = emailNotificationChecker.checkForNotifications()
+    if alerts:
+        return json.dumps((True, alerts))
+    else:
+        return json.dumps((False, []))
 
 #---------------------------
 # *** CURRENTLY UNUSED ***
