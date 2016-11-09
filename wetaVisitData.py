@@ -249,14 +249,6 @@ def _getWedData(data, date = "11/09/2016"):
 
     event = {}
     event['startTime'] = "10:00"
-    event['endTime'] = "11:00"
-    event['title'] = "Stage Operator Speed (part II)"
-    event['location'] = "Stage 26"
-    event['attendees'] = sorted(["Allen", "Justin R.", "(DanF)"])
-    data[date].append(event)
-
-    event = {}
-    event['startTime'] = "10:00"
     event['endTime'] = "11:30"
     event['title'] = "Meet Paolo Ziemba"
     event['location'] = "Artist Desk"
@@ -270,7 +262,7 @@ def _getWedData(data, date = "11/09/2016"):
     event['location'] = "1st Floor Conference Room"
     event['attendees'] = sorted(["Allen", "(Dean)", "(Albert)", "(DanN)", "(DanF)", "RyanC", "Ronald", "(TimB)"])
     data[date].append(event)
-
+    
     event = {}
     event['startTime'] = "11:30"
     event['endTime'] = "13:00"
@@ -296,6 +288,14 @@ def _getWedData(data, date = "11/09/2016"):
     data[date].append(event)
 
     event = {}
+    event['startTime'] = "12:30"
+    event['endTime'] = "13:00"
+    event['title'] = "Rosen to meet Benny" 
+    event['location'] = "Stage 26"
+    event['attendees'] = sorted(["JustinR", "Benny"])
+    data[date].append(event)
+
+    event = {}
     event['startTime'] = "13:00"
     event['endTime'] = "14:00"
     event['title'] = "LUNCH"
@@ -306,17 +306,16 @@ def _getWedData(data, date = "11/09/2016"):
     event = {}
     event['startTime'] = "14:00"
     event['endTime'] = "15:00"
-    event['title'] = "Weta team skype call to WGTN"
+    event['title'] = "LAB Issues, High Level"
     event['location'] = "Weta Office (The Locked Room)"
-    event['attendees'] = sorted(["Ronald", "Wil", "Allen", "Bex", "Ken",
-                                 "Justin R.", "Justin S.", "VPSP", "Patrick"])
+    event['attendees'] = sorted(["Tim", "Justin R.", "(Albert)", "(Dean)", "(Mitoki)"])
 
     event = {}
     event['startTime'] = "14:00"
     event['endTime'] = "15:00"
-    event['title'] = "LAB Issues, High Level"
-    event['location'] = "Weta Office (The Locked Room)"
-    event['attendees'] = sorted(["Tim", "Justin R.", "(Albert)", "(Dean)", "(Mitoki)"])
+    event['title'] = "Software and Deploy training"
+    event['location'] = "3rd Floor, TimB's office"
+    event['attendees'] = sorted(["(TimB)", "Ronald", "Wil", "(LEI Systems)"])
 
     event = {}
     event['startTime'] = "14:00"
@@ -329,9 +328,9 @@ def _getWedData(data, date = "11/09/2016"):
     event = {}
     event['startTime'] = "15:00"
     event['endTime'] = "16:00"
-    event['title'] = "QSMQ"
-    event['location'] = "1st Floor Conference Room"
-    event['attendees'] = sorted(["Christophe", "Ronald", "Wil", "Tim", "(TimB)"])
+    event['title'] = "Timecode Meeting"
+    event['location'] = "LAB Meeting Room"
+    event['attendees'] = sorted(["(Richie)", "Justin R.", "(Dan)", "(DanF)"])
     data[date].append(event)
 
     event = {}
@@ -348,6 +347,14 @@ def _getWedData(data, date = "11/09/2016"):
     event['title'] = "Meet Dean Lewandowski"
     event['location'] = "Artist Desk"
     event['attendees'] = sorted(["Corey"])
+    data[date].append(event)
+
+    event = {}
+    event['startTime'] = "16:00"
+    event['endTime'] = "17:00"
+    event['title'] = "Mocap to Moted"
+    event['location'] = "LAB Meeting Room" 
+    event['attendees'] = sorted(["(Don)", "(RyanC)", "Bex", "Justin R."])
     data[date].append(event)
 
     event = {}
@@ -372,6 +379,14 @@ def _getWedData(data, date = "11/09/2016"):
     event['title'] = "Meet Dean Lewandowski"
     event['location'] = "Artist Desk"
     event['attendees'] = sorted(["Corey", "Damon"])
+    data[date].append(event)
+
+    event = {}
+    event['startTime'] = "17:00"
+    event['endTime'] = "18:00"
+    event['title'] = "Timeline Training"
+    event['location'] = "Stage 26"
+    event['attendees'] = sorted(["Justin R.", "(Dan)", "(DanN)", "(Richie)", "Bex"])
     data[date].append(event)
 
     event = {}
